@@ -96,46 +96,51 @@ namespace Assignment4.Tests
 
         ///* products */
 
-        //[Fact]
-        //public void Product_Object_HasIdNameUnitPriceQuantityPerUnitAndUnitsInStock()
-        //{
-        //    var product = new Product();
-        //    Assert.Equal(0, product.Id);
-        //    Assert.Null(product.Name);
-        //    Assert.Equal(0.0, product.UnitPrice);
-        //    Assert.Null(product.QuantityPerUnit);
-        //    Assert.Equal(0, product.UnitsInStock);
-        //}
+        [Fact]
+        public void Product_Object_HasIdNameUnitPriceQuantityPerUnitAndUnitsInStock()
+        {
+            var product = new Product();
+            Assert.Equal(0, product.Id);
+            Assert.Null(product.Name);
+            Assert.Equal(0.0, product.UnitPrice);
+            Assert.Null(product.QuantityPerUnit);
+            Assert.Equal(0, product.UnitsInStock);
+        }
+
+        [Fact]
+        public void GetProduct_ValidId_ReturnsProductWithCategory()
+        {
+            var service = new DataService();
+            var product = service.GetProduct(1);
+            Assert.Equal("Chai", product.Name);
+            Assert.Equal("Beverages", product.Category.Name);
+        }
 
         //[Fact]
-        //public void GetProduct_ValidId_ReturnsProductWithCategory()
-        //{
-        //    var service = new DataService();
-        //    var product = service.GetProduct(1);
-        //    Assert.Equal("Chai", product.Name);
-        //    Assert.Equal("Beverages", product.Category.Name);
-        //}
+        public void GetProductsByCategory_ValidId_ReturnsProductWithCategory()
+        {
+            var service = new DataService();
+            var products = service.GetProductByCategory(1);
+            Assert.Equal(12, products.Count);
+            Assert.Equal("Chai", products.First().Name);
+            //Added missing dot(.) to CategoryName
+            //Assert.Equal("Beverages", products.First().CategoryName);
+            Assert.Equal("Beverages", products.First().Category.Name);
+            Assert.Equal("Lakkalikööri", products.Last().Name);
+        }
 
-        //[Fact]
-        //public void GetProductsByCategory_ValidId_ReturnsProductWithCategory()
-        //{
-        //    var service = new DataService();
-        //    var products = service.GetProductByCategory(1);
-        //    Assert.Equal(12, products.Count);
-        //    Assert.Equal("Chai", products.First().Name);
-        //    Assert.Equal("Beverages", products.First().CategoryName);
-        //    Assert.Equal("Lakkalikööri", products.Last().Name);
-        //}
-
-        //[Fact]
-        //public void GetProduct_NameSubString_ReturnsProductsThatMachesTheSubString()
-        //{
-        //    var service = new DataService();
-        //    var products = service.GetProductByName("em");
-        //    Assert.Equal(4, products.Count);
-        //    Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().ProductName);
-        //    Assert.Equal("Flotemysost", products.Last().ProductName);
-        //}
+        [Fact]
+        public void GetProduct_NameSubString_ReturnsProductsThatMachesTheSubString()
+        {
+            var service = new DataService();
+            var products = service.GetProductByName("em");
+            Assert.Equal(4, products.Count);
+            //Corrected ProductName to Name
+            // Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().ProductName); 
+            Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().Name);
+           // Assert.Equal("Flotemysost", products.Last().ProductName);
+            Assert.Equal("Flotemysost", products.Last().Name);
+        }
 
         ///* orders */
         //[Fact]

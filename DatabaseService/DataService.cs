@@ -108,5 +108,35 @@ namespace DatabaseService
             }
 
         }
+
+        public Product GetProduct(int id)
+        {
+            using var db = new NorthwindContex();
+            var product = db.Products.Find(id);
+            product.Category = GetCategory(product.CategoryId);
+            return product;
+        }
+
+        public List<Product> GetProductByCategory(int id)
+        {
+            using var db = new NorthwindContex();         
+            var pList = db.Products.Where(x => x.CategoryId == id);
+
+            var products = pList.ToList();
+            foreach (var product in products)
+            {
+                product.Category = GetCategory(product.CategoryId);
+             
+            }
+            return products;
+        }
+
+        public List<Product> GetProductByName(string name)
+        {
+            using var db = new NorthwindContex();
+            var pList = db.Products.Where(x => x.Name.Contains(name));
+            var products = pList.ToList();
+            return products;
+        }
     }
 }
