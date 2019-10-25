@@ -9,11 +9,19 @@ namespace ConsoleApp
         {
             var ds = new DataService();
 
-
-            foreach (var category in ds.GetCategories())
+            var a = ds.GetOrders();
+            foreach (var item in a)
             {
-                Console.WriteLine($"{category.Id} {category.Name}");
+                Console.WriteLine(item);  
             }
+
+            //var a = ds.GetOrderDetailsByOrderId(10747);
+            // foreach (var item in a)
+            // {
+            //     Console.WriteLine(item.ProductId);
+            // }
+
+
         }
     }
 }

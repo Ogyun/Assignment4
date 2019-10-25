@@ -138,5 +138,35 @@ namespace DatabaseService
             var products = pList.ToList();
             return products;
         }
+
+        public Order GetOrder(int id)
+        {
+            using var db = new NorthwindContex();
+            var order = db.Orders.Find(id);
+            order.OrderDetails = GetOrderDetailsByOrderId(id);
+            foreach (var orderDetail in order.OrderDetails)
+            {
+                orderDetail.Product = GetProduct(orderDetail.ProductId);
+                orderDetail.Product.Category = GetCategory(orderDetail.Product.CategoryId);
+            }
+
+            return order;
+
+        }
+
+        public List<OrderDetails> GetOrderDetailsByOrderId(int id)
+        {
+            using var db = new NorthwindContex();
+            var orderDetailsList = db.OrderDetails.Where(x => x.OrderId == id) ;
+            return orderDetailsList.ToList();
+
+        }
+
+        public List<Order> GetOrders()
+        {
+            using var db = new NorthwindContex();
+            return db.Orders.ToList();
+        }
+
     }
 }
