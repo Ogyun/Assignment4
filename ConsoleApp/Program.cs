@@ -9,11 +9,12 @@ namespace ConsoleApp
         {
             var ds = new DataService();
 
-            var a = ds.GetOrders();
+            var a = ds.GetOrderDetailsByProductId(11);
             foreach (var item in a)
             {
-                Console.WriteLine(item);  
+                Console.WriteLine(item.Order.Date);
             }
+        
 
             //var a = ds.GetOrderDetailsByOrderId(10747);
             // foreach (var item in a)

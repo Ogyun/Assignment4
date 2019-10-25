@@ -144,12 +144,6 @@ namespace DatabaseService
             using var db = new NorthwindContex();
             var order = db.Orders.Find(id);
             order.OrderDetails = GetOrderDetailsByOrderId(id);
-            foreach (var orderDetail in order.OrderDetails)
-            {
-                orderDetail.Product = GetProduct(orderDetail.ProductId);
-                orderDetail.Product.Category = GetCategory(orderDetail.Product.CategoryId);
-            }
-
             return order;
 
         }
@@ -158,6 +152,11 @@ namespace DatabaseService
         {
             using var db = new NorthwindContex();
             var orderDetailsList = db.OrderDetails.Where(x => x.OrderId == id) ;
+            foreach (var orderDetail in orderDetailsList)
+            {
+                orderDetail.Product = GetProduct(orderDetail.ProductId);
+                orderDetail.Product.Category = GetCategory(orderDetail.Product.CategoryId);
+            }
             return orderDetailsList.ToList();
 
         }
@@ -166,6 +165,19 @@ namespace DatabaseService
         {
             using var db = new NorthwindContex();
             return db.Orders.ToList();
+        }
+
+        public List<OrderDetails> GetOrderDetailsByProductId(int id)
+        {
+            using var db = new NorthwindContex();
+            var orderDetailsList = db.OrderDetails.Where(x => x.ProductId == id);
+            foreach (var orderDetail in orderDetailsList)
+            {
+                orderDetail.Order = GetOrder(orderDetail.OrderId);
+              
+            }
+            return orderDetailsList.ToList();
+
         }
 
     }
