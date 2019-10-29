@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DatabaseService
 {
-    public class DataService
+    public class DataService : IDataService
     {
         public List<Category> GetCategories()
         {
@@ -23,7 +23,7 @@ namespace DatabaseService
         {
             using var db = new NorthwindContex();
             var nextId = db.Categories.Max(x => x.Id) + 1;
-            
+
             var category = new Category
             {
                 Id = nextId,
@@ -66,16 +66,16 @@ namespace DatabaseService
                 {
                     return false;
                 }
-               
-                
+
+
             }
             else
             {
                 return false;
             }
-           
+
         }
-        public bool UpdateCategory(int id , string name, string description)
+        public bool UpdateCategory(int id, string name, string description)
         {
             using var db = new NorthwindContex();
             if (id > 0)
@@ -100,7 +100,7 @@ namespace DatabaseService
                 {
                     return false;
                 }
-               
+
             }
             else
             {
@@ -119,14 +119,14 @@ namespace DatabaseService
 
         public List<Product> GetProductByCategory(int id)
         {
-            using var db = new NorthwindContex();         
+            using var db = new NorthwindContex();
             var pList = db.Products.Where(x => x.CategoryId == id);
 
             var products = pList.ToList();
             foreach (var product in products)
             {
                 product.Category = GetCategory(product.CategoryId);
-             
+
             }
             return products;
         }
@@ -151,7 +151,7 @@ namespace DatabaseService
         public List<OrderDetails> GetOrderDetailsByOrderId(int id)
         {
             using var db = new NorthwindContex();
-            var orderDetailsList = db.OrderDetails.Where(x => x.OrderId == id) ;
+            var orderDetailsList = db.OrderDetails.Where(x => x.OrderId == id);
             foreach (var orderDetail in orderDetailsList)
             {
                 orderDetail.Product = GetProduct(orderDetail.ProductId);
@@ -174,7 +174,7 @@ namespace DatabaseService
             foreach (var orderDetail in orderDetailsList)
             {
                 orderDetail.Order = GetOrder(orderDetail.OrderId);
-              
+
             }
             return orderDetailsList.ToList();
 
