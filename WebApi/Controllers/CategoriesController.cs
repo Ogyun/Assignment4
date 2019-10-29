@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         {
             
             var cat = _dataService.CreateCategory(category.Name, category.Description);
-            return CreatedAtAction("CreateCategory", category);
+            return CreatedAtAction("CreateCategory", cat);
         }
 
     }
