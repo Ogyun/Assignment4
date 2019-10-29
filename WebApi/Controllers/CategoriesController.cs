@@ -31,6 +31,13 @@ namespace WebApi.Controllers
             if (category == null) return NotFound();
             return Ok(category);
         }
+        [HttpPost]
+        public ActionResult CreateCategory([FromBody] Category category)
+        {
+            
+            var cat = _dataService.CreateCategory(category.Name, category.Description);
+            return CreatedAtAction("CreateCategory", category);
+        }
 
     }
 }
