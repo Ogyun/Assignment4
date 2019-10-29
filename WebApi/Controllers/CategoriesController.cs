@@ -24,5 +24,13 @@ namespace WebApi.Controllers
             var categories = _dataService.GetCategories();
             return Ok(categories);
         }
+        [HttpGet("{categoryId}")]
+        public ActionResult<Category>GetCategory(int categoryId)
+        {
+            var category = _dataService.GetCategory(categoryId);
+            if (category == null) return NotFound();
+            return Ok(category);
+        }
+
     }
 }
