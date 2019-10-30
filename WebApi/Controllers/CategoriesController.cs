@@ -38,6 +38,21 @@ namespace WebApi.Controllers
             var cat = _dataService.CreateCategory(category.Name, category.Description);
             return CreatedAtAction("CreateCategory", cat);
         }
+        [HttpDelete("{categoryId}")]
+
+        public ActionResult DeleteCategory(int categoryId)
+        {
+            var category = _dataService.DeleteCategory(categoryId);
+            if (category == false) return NotFound();
+            return Ok();
+        }
+        [HttpPut("{categoryId}")]
+        public ActionResult PutCategory(int categoryId,[FromBody] Category category)
+        {
+            var cat = _dataService.UpdateCategory(categoryId,category.Name, category.Description);
+            if (cat == false) return NotFound();
+            return Ok();
+        }
 
     }
 }
