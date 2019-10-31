@@ -25,5 +25,15 @@ namespace WebApi.Controllers
             if (product == null) return NotFound();
             return Ok(product);
         }
+
+        [HttpGet("category/{categoryId}")]
+        public ActionResult<List<Product>>GetProductsByCategory(int categoryId)
+        {
+            var products = _dataService.GetProductByCategory(categoryId);
+            List<Product> empthyList = new List<Product>();
+            if (products == null) return NotFound(empthyList);
+            return Ok(products);
+        }
+
     }
 }

@@ -126,14 +126,20 @@ namespace DatabaseService
         {
             using var db = new NorthwindContex();
             var pList = db.Products.Where(x => x.CategoryId == id);
-
-            var products = pList.ToList();
-            foreach (var product in products)
+            if (pList.Any())
             {
-                product.Category = GetCategory(product.CategoryId);
-
+                var products = pList.ToList();             
+                foreach (var product in products)
+                {
+                    product.Category = GetCategory(product.CategoryId);
+                    
+                }
+                return products;
+            }else 
+            {
+                return null;
             }
-            return products;
+            
         }
 
         public List<Product> GetProductByName(string name)

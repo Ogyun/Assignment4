@@ -30,6 +30,8 @@ namespace DatabaseService
             modelBuilder.Entity<Product>().Property(m => m.QuantityPerUnit).HasColumnName("quantityperunit");
             modelBuilder.Entity<Product>().Property(m => m.UnitPrice).HasColumnName("unitprice");
             modelBuilder.Entity<Product>().Property(m => m.UnitsInStock).HasColumnName("unitsinstock");
+            modelBuilder.Entity<Product>().Ignore(m => m.CategoryName);
+            modelBuilder.Entity<Product>().Ignore(m => m.ProductName);
 
             modelBuilder.Entity<Order>().ToTable("orders");
             modelBuilder.Entity<Order>().Property(m => m.Id).HasColumnName("orderid");
