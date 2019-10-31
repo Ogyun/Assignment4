@@ -126,9 +126,10 @@ namespace DatabaseService
         {
             using var db = new NorthwindContex();
             var pList = db.Products.Where(x => x.CategoryId == id);
+            var products = pList.ToList();
             if (pList.Any())
             {
-                var products = pList.ToList();             
+                           
                 foreach (var product in products)
                 {
                     product.Category = GetCategory(product.CategoryId);
@@ -137,7 +138,7 @@ namespace DatabaseService
                 return products;
             }else 
             {
-                return null;
+                return products;
             }
             
         }
@@ -147,7 +148,21 @@ namespace DatabaseService
             using var db = new NorthwindContex();
             var pList = db.Products.Where(x => x.Name.Contains(name));
             var products = pList.ToList();
-            return products;
+            if (pList.Any())
+            {
+               
+                foreach (var product in products)
+                {
+                    product.Category = GetCategory(product.CategoryId);
+
+                }
+                return products;
+            }
+            else
+            {
+                return products;
+            }
+            
         }
 
         public Order GetOrder(int id)

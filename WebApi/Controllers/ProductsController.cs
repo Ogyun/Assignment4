@@ -30,9 +30,33 @@ namespace WebApi.Controllers
         public ActionResult<List<Product>>GetProductsByCategory(int categoryId)
         {
             var products = _dataService.GetProductByCategory(categoryId);
-            List<Product> empthyList = new List<Product>();
-            if (products == null) return NotFound(empthyList);
-            return Ok(products);
+            // List<Product> empthyList = new List<Product>();
+            if (products.Any())
+            {
+                return Ok(products); 
+            }
+            else
+            {
+                return NotFound(products);
+            }
+           
+        }
+
+        [HttpGet("name/{substring}")]
+
+        public ActionResult<List<Product>>GetProductsByName(string substring)
+        {
+            var products = _dataService.GetProductByName(substring);
+
+            if (products.Any())
+            {
+                return Ok(products);
+            }
+            else
+            {
+                return NotFound(products);
+            }          
+
         }
 
     }
