@@ -113,8 +113,13 @@ namespace DatabaseService
         {
             using var db = new NorthwindContex();
             var product = db.Products.Find(id);
-            product.Category = GetCategory(product.CategoryId);
-            return product;
+            if (product!=null)
+            {
+                product.Category = GetCategory(product.CategoryId);
+                return product;
+            }
+            return null;
+           
         }
 
         public List<Product> GetProductByCategory(int id)
@@ -179,6 +184,8 @@ namespace DatabaseService
             return orderDetailsList.ToList();
 
         }
+
+
 
     }
 }
